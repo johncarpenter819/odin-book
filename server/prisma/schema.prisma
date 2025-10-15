@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+  id  Int @id @default(autoincrement())
+  username String @unique
+  email String @unique
+  password String
+  bio String?
+  profilePhotoUrl String? @default("default-gravatar-url")
+  createdAt DateTime @default(now())
+  dateOfBirth DateTime
+  city String?
+  state String?
+  phoneNumber String?
+  sex String?
+
+  posts Post[]
+  comments Comment[]
+  likes Like[]
+  stories Story[]
+
+  following Follow[] @relation("Follows")
+  followedBy Follow[] @relation("FollowedBy")
+}
+
+model Post{
+  id Int @id @default(autoincrement())
+  title String
+  content String
+  published Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  authorId Int
+  author User @relation(fields: [authorId], references: [id])
+
+  comments Comment[]
+  likes Like[]
+}
+
+model Comment{
+  id Int @id @default(autoincrement())
+  text String
+  createdAt DateTime @default(now())
+
+  authorId Int
+  author User @relation(fields: [authorId], references: [id])
+
+  postId Int
+  post Post @relation(fields: [postId], references: [id])
+}
+
+model Like{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  authorId Int
+  author User @relation(fields: [authorId], references: [id])
+
+  postId Int
+  post Post @relation(fields: [postId], references: [id])
+
+  @@unique([authorId, postId])
+}
+
+model Follow{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  followerId Int
+  follower User @relation("FollowedBy", fields: [followerId], references: [id])
+
+  followingId Int
+  following User @relation("Follows", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId])
+}
+
+model Story{
+  id Int @id @default(autoincrement())
+  mediaUrl String
+  caption String?
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  authorId Int
+  author User @relation(fields: [authorId], references: [id])
+}
+
+model Session{
+  sid String @id @db.VarChar(255)
+  sess Json @db.Json
+  expire DateTime
+
+  @@map("session")
+}

@@ -1,0 +1,300 @@
+:root {
+  --gatherly-blue: #1877f2;
+  --gatherly-green: #42b72a;
+  --background-color: #d4d4d4;
+  --card-background: #ffffff;
+  --text-color: #050505;
+  --subtle-text-color: #606770;
+  --border-color: #dddfe2;
+  --header-height: 70px;
+  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+* {
+  box-sizing: border-box;
+}
+.home-page-container {
+  background-color: var(--background-color);
+  min-height: 100vh;
+  padding-top: var(--header-height);
+}
+.home-content-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 0;
+  display: grid;
+  grid-template-columns: 280px minmax(500px, 700px) 320px;
+  gap: 20px;
+  justify-content: center;
+}
+.home-left-sidebar,
+.home-right-sidebar,
+.story-tray-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.home-left-sidebar::-webkit-scrollbar,
+.home-right-sidebar::-webkit-scrollbar,
+.story-tray-container::-webkit-scrollbar {
+  display: none;
+}
+.story-user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border: 3px solid var(--gatherly-blue);
+  z-index: 10;
+}
+.home-left-sidebar,
+.home-right-sidebar {
+  position: sticky;
+  top: calc(var(--header-height) + 20px);
+  max-height: calc(100vh - var(--header-height) -40px);
+  overflow-y: auto;
+}
+.left-sidebar .sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+.left-sidebar .sidebar-link:hover {
+  background-color: #e4e6eb;
+}
+.sidebar-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+.story-tray-container {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  overflow-x: scroll;
+  width: 100%;
+}
+.story-tile {
+  position: relative;
+  width: 110px;
+  min-width: 110px;
+  height: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  background-color: var(--card-background);
+}
+.story-tile.create-story {
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: var(--card-background);
+}
+.story-tile .story-image {
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+}
+.story-tile .create-icon {
+  background-color: var(--gatherly-blue);
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  position: absolute;
+  top: 60%;
+  border: 4px solid var(--card-background);
+  transform: translateY(-50%);
+}
+.story-user-name {
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-color);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+.story-tile.user-story .story-user-name {
+  color: white;
+}
+.post-composer-card {
+  background-color: var(--card-background);
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-subtle);
+}
+.composer-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.composer-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.composer-input-field {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  background-color: #f0f2f5;
+  font-size: 16px;
+  outline: none;
+  cursor: pointer;
+}
+.composer-divider {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 10px 0;
+}
+.composer-options-bar {
+  display: flex;
+  justify-content: space-around;
+}
+.composer-options-bar .option-btn {
+  background: none;
+  border: none;
+  color: var(--subtle-text-color);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.composer-options-bar .option-btn:hover {
+  background-color: #f0f2f5;
+}
+.post-card {
+  background-color: var(--card-background);
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 15px;
+  box-shadow: var(--shadow-subtle);
+}
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.post-author-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+.author-username {
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 15px;
+}
+.post-timestamp {
+  font-size: 12px;
+  color: var(--subtle-text-color);
+}
+.post-content p {
+  font-size: 16px;
+  color: var(--text-color);
+  margin: 0 0 10px 0;
+  white-space: pre-wrap;
+}
+.post-stats {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  color: var(--subtle-text-color);
+}
+.post-actions {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 5px;
+  border-top: 1px solid var(--border-color);
+}
+.post-actions .action-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 8px 10px;
+  font-weight: 600;
+  color: var(--subtle-text-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.post-actions .action-btn:hover {
+  background-color: #f0f2f5;
+  color: var(--text-color);
+}
+.right-sidebar .sidebar-section {
+  padding: 15px;
+  background-color: var(--card-background);
+  border-radius: 8px;
+  box-shadow: var(--shadow-subtle);
+  margin-bottom: 15px;
+}
+.right-sidebar .section-title {
+  color: var(--subtle-text-color);
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.right-sidebar .contact-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  cursor: pointer;
+  transition: background-color 0.1s;
+}
+.right-sidebar .contact-item:hover {
+  background-color: #f0f2f5;
+  border-radius: 4px;
+}
+.right-sidebar .contact-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  position: relative;
+  flex-shrink: 0;
+}
+.right-sidebar .contact-name {
+  font-weight: 500;
+  font-size: 15px;
+}

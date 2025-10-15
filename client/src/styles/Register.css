@@ -1,0 +1,194 @@
+@import url("https://fonts.googleapis.com/css2?family=Playwrite+US+Modern&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  padding: 100px 50px 50px 50px;
+  min-height: 100vh;
+  background-color: rgb(255, 255, 255);
+}
+.register-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #1877f2;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+.nav-left .nav-logo {
+  font-size: 2.1rem;
+  font-weight: bold;
+  font-family: "Playwrite US Modern", cursive;
+}
+.nav-right {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+.nav-login-form {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.nav-input {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.9rem;
+}
+.nav-checkbox {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+  color: #f1f1f1;
+}
+.forgot-link {
+  font-size: 0.8rem;
+  color: #f1f1f1;
+  text-decoration: underline;
+  margin-left: 10px;
+}
+.nav-login-btn {
+  background-color: #42b72a;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: -20px;
+}
+.nav-login-btn:hover {
+  background-color: #36a420;
+}
+.nav-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.register-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 90%;
+  padding: 10px 50px;
+  margin-top: 20px;
+  gap: 40px;
+}
+.register-image {
+  flex: 1.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.register-image img {
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8pc 20px rgba(0, 0, 0, 0.322);
+  object-fit: cover;
+}
+.register-container {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 40px 20px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  margin-left: 100px;
+}
+.register-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.8rem;
+  color: #333;
+}
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+.form-label {
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #333;
+}
+.form-input {
+  padding: 5px 15px;
+  font-size: 1rem;
+  border: 1px solid #333;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+.form-input:focus {
+  border-color: #2575fc;
+  box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.2);
+  outline: none;
+}
+.create-account-btn {
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #2575fc;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.create-account-btn:hover:not(:disabled) {
+  background-color: #185ed4;
+  transform: translateY(-2px);
+}
+.create-account-btn:disabled {
+  background-color: #a0c4ff;
+  cursor: not-allowed;
+}
+.message {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 500;
+  padding: 10px;
+  border-radius: 6px;
+}
+.message.success {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+.message.error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
+@media (max-width: 576px) {
+  .register-container {
+    padding: 30px 20px;
+  }
+  .register-title {
+    font-size: 1.5rem;
+  }
+}
