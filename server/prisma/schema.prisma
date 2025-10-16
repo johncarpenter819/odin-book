@@ -20,7 +20,7 @@ model User{
   email String @unique
   password String
   bio String?
-  profilePhotoUrl String? @default("default-gravatar-url")
+  profilePhotoUrl String? 
   createdAt DateTime @default(now())
   dateOfBirth DateTime
   city String?

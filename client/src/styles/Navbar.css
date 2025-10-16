@@ -1,0 +1,70 @@
+.navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background-color: var(--card-background);
+  box-shadow: var(--shadow-subtle);
+  z-index: 1000;
+}
+.navbar-content-wrapper {
+  max-width: 1400px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar-logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--gatherly-blue);
+  text-decoration: none;
+}
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.nav-profile-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-color);
+  padding: 5px 10px;
+  border-radius: 20px;
+  transition: background-color 0.2s;
+}
+.nav-profile-link:hover {
+  background-color: #f0fff0;
+}
+.navbar-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}
+.nav-username {
+  font-weight: 500;
+}
+.nav-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  background-color: var(--card-background);
+}
+.nav-btn:hover {
+  background-color: var(--gatherly-blue);
+  color: white;
+}
+.nav-register-btn {
+  background-color: var(--gatherly-green);
+  color: white;
+}

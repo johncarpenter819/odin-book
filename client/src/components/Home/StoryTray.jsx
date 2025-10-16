@@ -11,7 +11,7 @@ const StoryTray = () => {
     const fetchStories = async () => {
       try {
         const data = await getStories();
-        setStories(data);
+        setStories(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Failed to fetch stories:", error);
       } finally {
@@ -37,12 +37,12 @@ const StoryTray = () => {
         <img
           src={currentUserStoryTile.imageUrl}
           alt="Create Story"
-          className="story-image"
+          className="story-user-avatar"
         />
         <div className="create-icon">+</div>
         <span className="story-user-name">Create Story</span>
       </div>
-      {stories.map((story) => (
+      {stories?.map((story) => (
         <div key={story.id} className="story-tile user-story">
           <img
             src={story.mediaUrl}

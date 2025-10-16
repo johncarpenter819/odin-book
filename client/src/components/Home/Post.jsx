@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import CommentModal from "../CommentModal";
 
 const Post = ({ post }) => {
   const { author, content, createdAt, likes = [], comments = [] } = post;
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const formattedDate = new Date(createdAt).toLocaleString();
+
+  const handleCommentClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleLikeClick = () => {
+    console.log("Liking post:", post.id);
+  };
 
   return (
     <div className="post-card">
@@ -29,10 +42,15 @@ const Post = ({ post }) => {
       </div>
 
       <div className="post-actions">
-        <button className="action-btn">Like</button>
-        <button className="action-btn">Comment</button>
+        <button onClick={handleLikeClick} className="action-btn">
+          Like
+        </button>
+        <button onClick={handleCommentClick} className="action-btn">
+          Comment
+        </button>
         <button className="action-btn">Share</button>
       </div>
+      {isModalOpen && <CommentModal post={post} onClose={handleCloseModal} />}
     </div>
   );
 };

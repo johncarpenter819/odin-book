@@ -54,7 +54,7 @@ export async function getCurrentUser() {
  */
 
 export async function getNewsFeed() {
-  const response = await fetch("/api/posts/feed", {
+  const response = await fetch(`${BASE_URL}/posts/feed`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -121,6 +121,17 @@ export async function loginUser(credentials) {
   return data.user;
 }
 
+export const logoutUser = async () => {
+  const response = await fetch(`${BASE_URL}/logout`, {
+    method: "POST",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    console.error("Logout API failed with status:", response.status);
+  }
+};
+
 /**
  * @param {object} postData
  * @returns {object}
@@ -128,7 +139,7 @@ export async function loginUser(credentials) {
  */
 
 export async function createPost(postData) {
-  const response = await fetch("/api/posts", {
+  const response = await fetch(`${BASE_URL}/posts`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -144,3 +155,50 @@ export async function createPost(postData) {
   }
   return data;
 }
+/**
+ * @param {number} postId
+ * @param {string} content
+ * @param {object}
+ * @throws {Error}
+ */
+
+export const postComment = async (postId, content) => {
+  const response = await fetch(`${BASE_URL}/posts/${postId}/comments`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json,",
+    },
+    body: JSON.stringify({ content }),
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      data.error || `Failed to post comment (Status: ${response.status})`
+    );
+  }
+  return data;
+};
+
+export const getPostComments = async (postId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/posts/${postId}/comments`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch post comments.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("API Error- getPostComments:", error);
+    throw error;
+  }
+};

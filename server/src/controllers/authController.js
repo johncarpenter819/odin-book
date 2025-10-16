@@ -44,7 +44,10 @@ exports.registerUser = async (req, res) => {
         state: state || null,
         phoneNumber: phoneNumber || null,
         bio: bio || "New user.",
-        profilePhotoUrl: profilePhotoUrl || "/default-avatar.png",
+        profilePhotoUrl:
+          profilePhotoUrl && profilePhotoUrl.trim() !== ""
+            ? profilePhotoUrl
+            : "/default-avatar.png",
       },
       select: {
         id: true,
@@ -84,7 +87,10 @@ exports.loginSuccess = (req, res) => {
         id: req.user.id,
         username: req.user.username,
         email: req.user.email,
-        profilePhotoUrl: req.user.profilePhotoUrl || "/default-avatar.png",
+        profilePhotoUrl:
+          req.user.profilePhotoUrl && req.user.profilePhotoUrl.trim() !== ""
+            ? req.user.profilePhotoUrl
+            : "/default-avatar.png",
         city: req.user.city,
         state: req.user.state,
         dateOfBirth: req.user.dateOfBirth,

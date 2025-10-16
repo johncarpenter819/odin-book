@@ -4,6 +4,8 @@ import StoryTray from "./StoryTray";
 import Post from "./Post";
 
 const NewsFeedCenter = ({ posts }) => {
+  const isPostsAvailable = posts && posts.length > 0;
+
   return (
     <div className="news-feed-center">
       <div className="stories-section">
@@ -15,7 +17,7 @@ const NewsFeedCenter = ({ posts }) => {
       </div>
 
       <div className="feed-posts">
-        {posts.length > 0 ? (
+        {posts && posts.length > 0 ? (
           posts.map((post) => <Post key={post.id} post={post} />)
         ) : (
           <p className="no-posts-message">

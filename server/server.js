@@ -61,7 +61,7 @@ const userRoutes = require("./src/routes/userRoutes");
 const storyRoutes = require("./src/routes/storyRoutes");
 
 app.use("/api/auth", authRoutes);
-app.use("/api/posts", postRoutes);
+app.use("/api/auth/posts", postRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/stories", storyRoutes);
 
