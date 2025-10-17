@@ -1,6 +1,7 @@
 const { tr, da } = require("@faker-js/faker");
 const { connect } = require("../routes/authRoutes");
 const { act } = require("react");
+const { text } = require("express");
 
 exports.getNewsFeed = async (req, res) => {
   try {
@@ -86,15 +87,15 @@ exports.createComment = async (req, res) => {
   }
 
   try {
-    const newComment = await global.prisma.comment.create({
+    const createdComment = await global.prisma.comment.create({
       data: {
-        content: content.trim(),
+        text: content.trim(),
         author: { connect: { id: authorId } },
         post: { connect: { id: postId } },
       },
       select: {
         id: true,
-        content: true,
+        text: true,
         createdAt: true,
         author: {
           select: {
@@ -106,7 +107,13 @@ exports.createComment = async (req, res) => {
       },
     });
 
-    res.status(201).json(newComment);
+    const newCommentResponse = {
+      ...createdComment,
+      content: createdComment.text,
+    };
+    delete newCommentResponse.text;
+
+    res.status(201).json(newCommentResponse);
   } catch (error) {
     console.error("Error creating comment:", error);
     res.status(500).json({ error: "Failed to post comment." });
@@ -121,11 +128,14 @@ exports.getPostComments = async (req, res) => {
   }
 
   try {
-    const comments = await global.prisma.comment.findMany({
+    const rawComments = await global.prisma.comment.findMany({
       where: {
         postId: postId,
       },
-      include: {
+      select: {
+        id: true,
+        text: true,
+        createdAt: true,
         author: {
           select: {
             id: true,
@@ -138,6 +148,13 @@ exports.getPostComments = async (req, res) => {
         createdAt: "desc",
       },
     });
+
+    const comments = rawComments.map((comment) => ({
+      id: comment.id,
+      content: comment.text,
+      createdAt: comment.createdAt,
+      author: comment.author,
+    }));
 
     res.status(200).json(comments);
   } catch (error) {

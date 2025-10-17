@@ -28,12 +28,8 @@ const CommentModal = ({ post: initialPost, onClose }) => {
       }
     };
 
-    if (!initialPost.comments || initialPost.comments.length === 0) {
-      fetchComments();
-    } else {
-      setLoadingComments(false);
-    }
-  }, [post.id, initialPost.comments]);
+    fetchComments();
+  }, [post.id]);
 
   const handleNewComment = (newComment) => {
     setPost((prevPost) => ({

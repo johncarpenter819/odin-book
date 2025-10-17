@@ -77,6 +77,43 @@
   border-radius: 8px;
   margin-top: 15px;
 }
+.modal-comments-area {
+  padding: 0 20px 0 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 0;
+}
+.comment-list-container {
+  overflow-y: auto;
+  flex-grow: 1;
+  padding-right: 10pc;
+}
+.single-comment-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+.single-comment-item img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+.single-comment-item p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  flex-grow: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.single-comment-item p strong {
+  font-weight: 600;
+  margin-right: 4px;
+}
 .comment-form .comment-author-avatar {
   width: 36px;
   height: 36px;

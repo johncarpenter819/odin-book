@@ -166,7 +166,7 @@ export const postComment = async (postId, content) => {
   const response = await fetch(`${BASE_URL}/posts/${postId}/comments`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json,",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({ content }),
     credentials: "include",
