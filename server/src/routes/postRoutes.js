@@ -11,6 +11,11 @@ router.get(
 );
 
 router.post("/", authMiddleware.isAuthenticated, postController.createPost);
+router.post(
+  "/:postId/like",
+  authMiddleware.isAuthenticated,
+  postController.toggleLike
+);
 
 router.post(
   "/:postId/comments",

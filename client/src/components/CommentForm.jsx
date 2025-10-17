@@ -25,8 +25,8 @@ const CommentForm = ({ postId, onCommentPosted }) => {
       }
 
       setCommentText("");
-    } catch (erorr) {
-      console.erorr("Failed to post comment:", erorr);
+    } catch (error) {
+      console.error("Failed to post comment:", error);
     } finally {
       setIsSubmitting(false);
     }

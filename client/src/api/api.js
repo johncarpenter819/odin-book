@@ -202,3 +202,20 @@ export const getPostComments = async (postId) => {
     throw error;
   }
 };
+
+export async function togglePostLike(postId) {
+  const response = await fetch(`${BASE_URL}/posts/${postId}/like`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    const data = await response.json();
+    throw new Error(data.error || "Failed to toggle like on post.");
+  }
+
+  return response.json();
+}

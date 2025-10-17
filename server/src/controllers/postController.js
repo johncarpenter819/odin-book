@@ -1,5 +1,6 @@
-const { tr } = require("@faker-js/faker");
+const { tr, da } = require("@faker-js/faker");
 const { connect } = require("../routes/authRoutes");
+const { act } = require("react");
 
 exports.getNewsFeed = async (req, res) => {
   try {
@@ -31,7 +32,8 @@ exports.getNewsFeed = async (req, res) => {
 
     res.status(200).json(posts);
   } catch (error) {
-    console.error("Error fetching news feed.");
+    console.error("Error fetching news feed.", error);
+    res.status(500).json({ error: "Failed to load feed data" });
   }
 };
 
@@ -141,5 +143,70 @@ exports.getPostComments = async (req, res) => {
   } catch (error) {
     console.error("Error fetching comments:", error);
     res.status(500).json({ error: "Failed to fetch comments." });
+  }
+};
+
+exports.toggleLike = async (req, res) => {
+  if (!req.user || !req.user.id) {
+    return res
+      .status(401)
+      .json({ error: "You must be logged in to like a post." });
+  }
+
+  const postId = parseInt(req.params.postId, 10);
+  const authorId = req.user.id;
+
+  if (isNaN(postId)) {
+    return res.status(400).json({ error: "Invalid Post ID." });
+  }
+
+  try {
+    const existingLike = await global.prisma.like.findUnique({
+      where: {
+        authorId_postId: {
+          authorId: authorId,
+          postId: postId,
+        },
+      },
+    });
+
+    let updatedPost;
+
+    if (existingLike) {
+      await global.prisma.like.delete({
+        where: {
+          authorId_postId: {
+            authorId: authorId,
+            postId: postId,
+          },
+        },
+      });
+
+      updatedPost = await global.prisma.post.findUnique({
+        where: { id: postId },
+        select: { likes: { select: { authorId: true } } },
+      });
+      return res
+        .status(200)
+        .json({ action: "unliked", likes: updatedPost.likes });
+    } else {
+      await global.prisma.like.create({
+        data: {
+          author: { connect: { id: authorId } },
+          post: { connect: { id: postId } },
+        },
+      });
+
+      updatedPost = await global.prisma.post.findUnique({
+        where: { id: postId },
+        select: { likes: { select: { authorId: true } } },
+      });
+      return res
+        .status(200)
+        .json({ action: "liked", likes: updatedPost.likes });
+    }
+  } catch (error) {
+    console.error("Error toggling like:", error);
+    res.status(500).json({ error: "Failed to toggle post like." });
   }
 };

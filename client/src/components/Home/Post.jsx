@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import CommentModal from "../CommentModal";
+import { togglePostLike } from "../../api/api";
+import { useAuth } from "../../context/AuthContext";
 
-const Post = ({ post }) => {
+const Post = ({ post: initialPost }) => {
+  const { currentUser } = useAuth();
+  const [post, setPost] = useState(initialPost);
   const { author, content, createdAt, likes = [], comments = [] } = post;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const formattedDate = new Date(createdAt).toLocaleString();
+
+  const currentUserId = currentUser ? currentUser.id : null;
+  const isLiked = currentUserId
+    ? likes.some((like) => like.authorId === currentUserId)
+    : false;
 
   const handleCommentClick = () => {
     setIsModalOpen(true);
@@ -14,8 +23,27 @@ const Post = ({ post }) => {
     setIsModalOpen(false);
   };
 
-  const handleLikeClick = () => {
-    console.log("Liking post:", post.id);
+  const handleLikeClick = async () => {
+    if (!currentUser) {
+      alert("You must be logged in to like a post.");
+      return;
+    }
+
+    try {
+      const newLikes = isLiked
+        ? likes.filter((like) => like.authorId !== currentUserId)
+        : [...likes, { authorId: currentUserId }];
+
+      setPost((prevPost) => ({ ...prevPost, likes: newLikes }));
+
+      const response = await togglePostLike(post.id);
+
+      console.log(`Successfully like/unliked post ${post.id}`, response.action);
+    } catch (error) {
+      console.error("Error toggling like:", error);
+      setPost(initialPost);
+      alert("Failed to toggle like. Please try again.");
+    }
   };
 
   return (

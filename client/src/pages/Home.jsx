@@ -31,7 +31,7 @@ const Home = () => {
   }
 
   if (error) {
-    return <div className="erorr-message">{error}</div>;
+    return <div className="error-message">{error}</div>;
   }
 
   return (
