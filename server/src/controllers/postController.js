@@ -39,19 +39,24 @@ exports.getNewsFeed = async (req, res) => {
 };
 
 exports.createPost = async (req, res) => {
-  const { content, mediaUrl } = req.body;
+  if (!req.user || !req.user.id) {
+    return res
+      .status(401)
+      .json({ error: "Authentication is required to create a post" });
+  }
+
+  const { content } = req.body;
 
   if (!content) {
     return res.status(400).json({ error: "Post content is required." });
   }
 
-  const authorId = req.user.id;
+  const authorId = parseInt(req.user.id, 10);
 
   try {
     const newPost = await global.prisma.post.create({
       data: {
         content,
-        mediaUrl: mediaUrl || null,
         author: {
           connect: { id: authorId },
         },

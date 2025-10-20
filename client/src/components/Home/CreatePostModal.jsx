@@ -63,7 +63,7 @@ const CreatePostModal = ({ onClose, onPostCreated }) => {
             className="post-input"
           />
 
-          {error && <p className="form-error"></p>}
+          {error && <p className="form-error">{error}</p>}
 
           <div className="post-media-options">
             <span>Add to your post</span>

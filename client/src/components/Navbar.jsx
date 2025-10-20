@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { logoutUser } from "../api/api";
 import "../styles/Navbar.css";
@@ -7,6 +7,7 @@ import "../styles/Navbar.css";
 const Navbar = () => {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleLogout = async () => {
     try {
@@ -20,6 +21,14 @@ const Navbar = () => {
     }
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${searchQuery.trim()}`);
+    }
+    setSearchQuery("");
+  };
+
   const profilePhoto = currentUser?.profilePhotoUrl || "/default-avatar.png";
   const profilePath = `/profile/${currentUser?.username}`;
 
@@ -27,9 +36,26 @@ const Navbar = () => {
     <header className="navbar-container">
       <nav className="navbar-content-wrapper">
         <div className="navbar-left">
-          <Link to={"/"} className="navbar-logo">
+          <Link to={"/home"} className="navbar-logo">
             Gatherly
           </Link>
+        </div>
+
+        <div className="navbar-center">
+          <form onSubmit={handleSearch} className="search-form">
+            <input
+              type="text"
+              placeholder="Search Gatherly..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="search-input"
+            />
+            <button type="submit" className="search-button">
+              <span role="img" aria-label="search">
+                🔍
+              </span>
+            </button>
+          </form>
         </div>
 
         <div className="navbar-right">

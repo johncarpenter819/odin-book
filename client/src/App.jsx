@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import UserIndexPage from "./pages/UserIndexPage";
 import ProfilePage from "./pages/ProfilePage";
+import UserSearchPage from "./pages/UserSearchPage";
 
 const App = () => {
   const location = useLocation();
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/users" element={<UserIndexPage />} />
         <Route path="/profile/:username" element={<ProfilePage />} />
+        <Route path="/search" element={<UserSearchPage />} />
       </Routes>
     </div>
   );

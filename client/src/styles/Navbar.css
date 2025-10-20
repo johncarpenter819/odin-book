@@ -68,3 +68,32 @@
   background-color: var(--gatherly-green);
   color: white;
 }
+.search-form {
+  display: flex;
+  background-color: var(--card-background);
+  border-radius: 20px;
+  padding: 4px 10px;
+  width: 100%;
+}
+.search-input {
+  flex-grow: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 5px 8px;
+  font-size: 15px;
+  color: var(--text-color);
+}
+.search-input::placeholder {
+  color: var(--subtle-text-color);
+}
+.search-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+  color: var(--background-color);
+  transition: color 0.2s;
+}
