@@ -9,7 +9,8 @@ import { AuthProvider } from "./context/AuthContext";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
-// import Profile from "./pages/Profile";
+import UserIndexPage from "./pages/UserIndexPage";
+import ProfilePage from "./pages/ProfilePage";
 
 const App = () => {
   const location = useLocation();
@@ -22,7 +23,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Register />} />
         <Route path="/home" element={<Home />} />
-        {/* <Route path="/profile/:username" element={<Profile />} /> */}
+        <Route path="/users" element={<UserIndexPage />} />
+        <Route path="/profile/:username" element={<ProfilePage />} />
       </Routes>
     </div>
   );

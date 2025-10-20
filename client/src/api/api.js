@@ -1,4 +1,5 @@
 const BASE_URL = "/api/auth";
+const USER_BASE_URL = "/api/users";
 
 /**
 @param {object} userData
@@ -218,4 +219,70 @@ export async function togglePostLike(postId) {
   }
 
   return response.json();
+}
+
+/**
+ * @param {number} userId
+ * @returns {object}
+ * @throws {Error}
+ */
+
+export async function getUserProfile(identifier) {
+  const response = await fetch(`${USER_BASE_URL}/username/${identifier}`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      data.error || `Failed to fetch user profile for: ${identifier}.`
+    );
+  }
+  return data;
+}
+
+/**
+ * @returns {Array<object>}
+ * @throws {Error}
+ */
+
+export async function getAllUsers() {
+  const response = await fetch(USER_BASE_URL, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error || "Failed to fetch user list.");
+  }
+  return data;
+}
+
+/**
+ * @param {number} userId
+ * @returns {object}
+ * @throws {Error}
+ */
+
+export async function toggleFollow(userId) {
+  const response = await fetch(`${USER_BASE_URL}/${userId}/follow`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      data.error || `Failed to toggle follow status for user ID: ${userId}.`
+    );
+  }
+  return data;
 }

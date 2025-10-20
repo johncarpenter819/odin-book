@@ -3,7 +3,7 @@ import PostComposer from "./PostComposer";
 import StoryTray from "./StoryTray";
 import Post from "./Post";
 
-const NewsFeedCenter = ({ posts }) => {
+const NewsFeedCenter = ({ posts, onOpenModal }) => {
   const isPostsAvailable = posts && posts.length > 0;
 
   return (
@@ -13,7 +13,7 @@ const NewsFeedCenter = ({ posts }) => {
       </div>
 
       <div className="post-commposer-section">
-        <PostComposer />
+        <PostComposer onOpenModal={onOpenModal} />
       </div>
 
       <div className="feed-posts">

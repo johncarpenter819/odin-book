@@ -87,11 +87,12 @@
 .comment-list-container {
   overflow-y: auto;
   flex-grow: 1;
-  padding-right: 10pc;
+  padding-right: 10px;
 }
 .single-comment-item {
   display: flex;
   align-items: flex-start;
+  justify-content: center;
   margin-bottom: 15px;
 }
 .single-comment-item img {
@@ -101,9 +102,11 @@
   object-fit: cover;
   flex-shrink: 0;
   margin-right: 10px;
+  margin-top: 10px;
 }
 .single-comment-item p {
   margin: 0;
+  margin-top: 15px;
   font-size: 14px;
   line-height: 1.4;
   flex-grow: 1;
