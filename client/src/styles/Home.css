@@ -260,6 +260,13 @@
   background-color: #f0f2f5;
   color: var(--text-color);
 }
+.post-author-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
 .right-sidebar .sidebar-section {
   padding: 15px;
   background-color: var(--card-background);

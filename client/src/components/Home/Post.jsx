@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CommentModal from "../CommentModal";
 import { togglePostLike } from "../../api/api";
 import { useAuth } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Post = ({ post: initialPost }) => {
   const { currentUser } = useAuth();
@@ -9,6 +10,7 @@ const Post = ({ post: initialPost }) => {
   const { author, content, createdAt, likes = [], comments = [] } = post;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const formattedDate = new Date(createdAt).toLocaleString();
+  const profilePath = `/profile/${author.username}`;
 
   const currentUserId = currentUser ? currentUser.id : null;
   const isLiked = currentUserId
@@ -49,15 +51,17 @@ const Post = ({ post: initialPost }) => {
   return (
     <div className="post-card">
       <div className="post-header">
-        <img
-          src={author.profilePhotoUrl || "/default-avatar.png"}
-          alt={author.username}
-          className="post-author-avatar"
-        />
-        <div className="author-info">
-          <span className="author-username">{author.username}</span>
-          <span className="post-timestamp">{formattedDate}</span>
-        </div>
+        <Link to={profilePath} className="post-author-link">
+          <img
+            src={author.profilePhotoUrl || "/default-avatar.png"}
+            alt={author.username}
+            className="post-author-avatar"
+          />
+          <div className="author-info">
+            <span className="author-username">{author.username}</span>
+            <span className="post-timestamp">{formattedDate}</span>
+          </div>
+        </Link>
       </div>
 
       <div className="post-content">
