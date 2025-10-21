@@ -1,6 +1,8 @@
 exports.getUserProfile = async (req, res) => {
   const identifier = req.params.username;
 
+  const currentUserId = req.user ? req.user.id : null;
+
   try {
     const profileUser = await global.prisma.user.findUnique({
       where: { username: identifier },
@@ -12,9 +14,18 @@ exports.getUserProfile = async (req, res) => {
         city: true,
         state: true,
         createdAt: true,
+        dateOfBirth: true,
+        sex: true,
+        phoneNumber: true,
         _count: {
           select: { followedBy: true, following: true },
         },
+        followedBy: currentUserId
+          ? {
+              where: { followerId: currentUserId },
+              select: { followerId: true },
+            }
+          : false,
 
         posts: {
           orderBy: { createdAt: "desc" },
@@ -36,7 +47,18 @@ exports.getUserProfile = async (req, res) => {
       return res.status(404).json({ error: "User not found." });
     }
 
-    res.status(200).json(profileUser);
+    const isFollowedByCurrentUser = profileUser.followedBy
+      ? profileUser.followedBy.length > 0
+      : false;
+
+    const { followedBy, ...userData } = profileUser;
+
+    const finalProfile = {
+      ...userData,
+      isFollowedByCurrentUser,
+    };
+
+    res.status(200).json(finalProfile);
   } catch (error) {
     console.error("Error fetching user profile:", error);
     res.status(500).json({ error: "Failed to fetch user profile." });
@@ -129,5 +151,61 @@ exports.toggleFollow = async (req, res) => {
   } catch (error) {
     console.error("Error toggling follow:", error);
     res.status(500).json({ error: "Failed to toggle follow status." });
+  }
+};
+
+exports.updateUserProfile = async (req, res) => {
+  if (!req.user || !req.user.id) {
+    return res.status(401).json({ error: "Authentication required." });
+  }
+
+  const userIdToUpdate = req.user.id;
+  const { bio, city, state, profilePhotoUrl } = req.body;
+
+  try {
+    const updatedUser = await global.prisma.user.update({
+      where: { id: userIdToUpdate },
+      data: {
+        bio,
+        city,
+        state,
+        profilePhotoUrl,
+      },
+      select: {
+        id: true,
+        username: true,
+        bio: true,
+        profilePhotoUrl: true,
+        city: true,
+        state: true,
+        createdAt: true,
+        dateOfBirth: true,
+        sex: true,
+        phoneNumber: true,
+        _count: {
+          select: { followedBy: true, following: true },
+        },
+        followedBy: {
+          where: { followerId: userIdToUpdate },
+          select: { followerId: true },
+        },
+      },
+    });
+
+    const isFollowedByCurrentUser = updatedUser.followedBy
+      ? updatedUser.followedBy.length > 0
+      : false;
+
+    const { followedBy, ...userData } = updatedUser;
+
+    const finalProfile = {
+      ...userData,
+      isFollowedByCurrentUser,
+    };
+
+    res.status(200).json(finalProfile);
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    res.status(500).json({ error: "Failed to update profile." });
   }
 };

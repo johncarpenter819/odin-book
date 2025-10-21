@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { toggleFollow } from "../api/api";
 
-const FollowButton = ({ targetUserId, initialIsFollowing, onToggle }) => {
+const FollowButton = ({
+  targetUserId,
+  initialIsFollowing: isFollowing,
+  onToggle,
+}) => {
   const { currentUser } = useAuth();
-  const [isFollowing, setIsFollowing] = useState(initialIsFollowing);
   const [isLoading, setIsLoading] = useState(false);
 
   if (currentUser && currentUser.id === targetUserId) {
@@ -20,8 +23,6 @@ const FollowButton = ({ targetUserId, initialIsFollowing, onToggle }) => {
     setIsLoading(true);
     const newFollowStatus = !isFollowing;
 
-    setIsFollowing(newFollowStatus);
-
     try {
       const response = await toggleFollow(targetUserId);
 
@@ -32,7 +33,10 @@ const FollowButton = ({ targetUserId, initialIsFollowing, onToggle }) => {
       console.log(`User ${response.action} target user ${targetUserId}`);
     } catch (error) {
       console.error("Failed to toggle follow:", error);
-      setIsFollowing(!newFollowStatus);
+
+      if (onToggle) {
+        onToggle(targetUserId, isFollowing);
+      }
       alert("Failed to change follow status. Please try again.");
     } finally {
       setIsLoading(false);

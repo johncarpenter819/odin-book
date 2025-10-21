@@ -286,3 +286,22 @@ export async function toggleFollow(userId) {
   }
   return data;
 }
+
+export const updateUserProfile = async (profileData) => {
+  const response = await fetch(`${USER_BASE_URL}/profile`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(profileData),
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(errorData.error || "Failed to update profile.");
+  }
+
+  return data;
+};

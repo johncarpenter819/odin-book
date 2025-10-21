@@ -12,14 +12,14 @@
   gap: 50px;
   padding: 100px 50px 50px 50px;
   min-height: 100vh;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--background-color);
 }
 .register-navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
-  background-color: #1877f2;
+  background-color: var(--card-background);
   color: white;
   position: fixed;
   top: 0;
@@ -33,6 +33,7 @@
   font-size: 2.1rem;
   font-weight: bold;
   font-family: "Playwrite US Modern", cursive;
+  color: var(--gatherly-blue);
 }
 .nav-right {
   display: flex;
@@ -47,18 +48,18 @@
 .nav-input {
   padding: 8px 10px;
   border-radius: 6px;
-  border: none;
+  border-color: var(--gatherly-blue);
   font-size: 0.9rem;
 }
 .nav-checkbox {
   display: flex;
   align-items: center;
   font-size: 0.8rem;
-  color: #f1f1f1;
+  color: var(--text-color);
 }
 .forgot-link {
   font-size: 0.8rem;
-  color: #f1f1f1;
+  color: var(--text-color);
   text-decoration: underline;
   margin-left: 10px;
 }
@@ -178,7 +179,7 @@
   background-color: #d4edda;
   border: 1px solid #c3e6cb;
 }
-.message.error {
+.nav-error-message {
   color: #721c24;
   background-color: #f8d7da;
   border: 1px solid #f5c6cb;
